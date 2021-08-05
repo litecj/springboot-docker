@@ -1,4 +1,7 @@
 package net.litecj702.UserService.item.repository;
 
-public interface CartRepository {
+import net.litecj702.UserService.item.entity.Cart;
+import org.springframework.data.repository.reactive.ReactiveCrudRepository;
+
+public interface CartRepository extends ReactiveCrudRepository<Cart,String> {
 }
