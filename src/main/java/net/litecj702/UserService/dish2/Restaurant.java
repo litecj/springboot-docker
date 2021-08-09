@@ -5,7 +5,7 @@ import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
 import lombok.Data;
 
-@Data class Dish {
+@Data final class Dish {
     private String description;
     private boolean delivered = false;
 
@@ -25,20 +25,20 @@ import lombok.Data;
 
 
 }
-@Service class KitchenService {
+@Service final class KitchenService {
     Flux<Dish> getDishes(){
         return Flux.just(new Dish("김치찌개"),
                 new Dish("떡볶이"),
                 new Dish("삼계탕"));
     }
 }
-@RequiredArgsConstructor class PrototypeServer {
+@Data final class PrototypeServer {
     private final KitchenService kitchen;
     Flux<Dish> doingMyJob(){
         return kitchen.getDishes().map(dish -> Dish.deliver((dish)));
     }
 }
-@RequiredArgsConstructor class AdvancedServer {
+@Data final class AdvancedServer {
     private final KitchenService kitchen;
 
     Flux<Dish> doingMyJob(){
@@ -49,7 +49,7 @@ import lombok.Data;
                 .map(Dish::deliver);
     }
 }
-public class Restaurant {
+public final class Restaurant {
     public void subscribe() {
         AdvancedServer server = new AdvancedServer(new KitchenService());
         server.doingMyJob().subscribe(
